@@ -7,53 +7,68 @@
  */
 
 const readline = require('readline-sync');
+const text = require('./calculator_messages.json');
 function promt(msg) {
   console.log(`=> ${msg}`);
 }
 
-function isNotaNumber (num) {
-  return num.trimStart() === '' || Number.isNaN(Number(num));
+promt(text.language);
+let lang = readline.question().toUpperCase();
+promt(text[lang].welcome);
+
+let goAgain = true;
+while (goAgain) {
+  function isNotaNumber (num) {
+    return num.trimStart() === '' || Number.isNaN(Number(num));
+  }
+
+
+  promt(text[lang].askFirstNumber);
+  let firstNUmber = readline.question();
+
+  while (isNotaNumber(firstNUmber)) {
+    promt(text[lang].invalidNumber);
+    firstNUmber = readline.question();
+  }
+
+  promt(text[lang].askSecondNumber);
+  let secondNUmber = readline.question();
+
+  while (isNotaNumber(secondNUmber)) {
+    promt(text[lang].invalidNumber);
+    secondNUmber = readline.question();
+  }
+
+  promt(text[lang].whatOperation);
+  let operator = readline.question();
+
+  while (!['1', '2', '3', '4'].includes(operator)) {
+    promt(text[lang].invalidOperation);
+    operator = readline.question();
+  }
+
+  let output;
+  switch (operator) {
+    case '1':
+      output = Number(firstNUmber) + Number(secondNUmber);
+      break;
+    case '2':
+      output = Number(firstNUmber) - Number(secondNUmber);
+      break;
+    case '3':
+      output = Number(firstNUmber) * Number(secondNUmber);
+      break;
+    case '4':
+      output = Number(firstNUmber) / Number(secondNUmber);
+      break;
+  }
+
+  promt(`${text[lang].result } ${output}`);
+  promt(text[lang].repeat);
+  let rawGoAgain = readline.question().toLowerCase();
+  if (rawGoAgain === 'yes') goAgain = true;
+  if (rawGoAgain === 'no')  {
+    promt(text[lang].bye);
+    goAgain = false;
+  }
 }
-
-promt('Welcome to the calculator');
-promt('Pleaser enter first number');
-let firstNUmber = readline.question();
-
-while (isNotaNumber(firstNUmber)) {
-  promt('This does not look like a number, please enter a valid number.');
-  firstNUmber = readline.question();
-}
-
-promt('Pleaser enter second number: ');
-let secondNUmber = readline.question();
-
-while (isNotaNumber(secondNUmber)) {
-  promt('This does not look like a number, please enter a valid number.');
-  secondNUmber = readline.question();
-}
-
-promt('What operation you wish to perform on the two numbers?\n Enter (1) to Add,  (2) to Subtract,  (3) to Multiply, or (4) to Divide');
-let operator = readline.question();
-
-while (!['1', '2', '3', '4'].includes(operator)) {
-  promt('Pick either 1, 2, 3, or 4 perform an operation.');
-  operator = readline.question();
-}
-
-let output;
-switch (operator) {
-  case '1':
-    output = Number(firstNUmber) + Number(secondNUmber);
-    break;
-  case '2':
-    output = Number(firstNUmber) - Number(secondNUmber);
-    break;
-  case '3':
-    output = Number(firstNUmber) * Number(secondNUmber);
-    break;
-  case '4':
-    output = Number(firstNUmber) / Number(secondNUmber);
-    break;
-}
-
-promt(`The result is ${output}`);
