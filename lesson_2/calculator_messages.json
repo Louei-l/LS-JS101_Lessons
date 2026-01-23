@@ -1,16 +1,19 @@
 {
-  "language" : "Enter 'EN' for English or 'JP' for Japanese",
+    "language" : "Enter 'EN' for English or 'JP' for Japanese",
+    "invalidLanguage" : "Please select EN or JP to continue",
   
   "EN" : {
     "welcome" : "Welcome to the calculator",
-    "askFirstNumber" : "Pleaser enter first number",
-    "askSecondNumber" : "Pleaser enter second number",
+    "askFirstNumber" : "Please enter the first number",
+    "askSecondNumber" : "Please enter the second number",
     "invalidNumber" : "This does not look like a number, please enter a valid number.",
-    "whatOperation" : "What operation you wish to perform on the two numbers?\n Enter (1) to Add,  (2) to Subtract,  (3) to Multiply, or (4) to Divide",
-    "invalidOperation" : "Pick either 1, 2, 3, or 4 perform an operation.",
+    "whatOperation" : "What operation you wish to perform on the two numbers?\n Enter (1) to Add, (2) to Subtract, (3) to Multiply, or (4) to Divide",
+    "invalidOperation" : "Pick either 1, 2, 3, or 4 to perform an operation.",
     "result" : "The result is",
     "repeat" : "Would you like to do another calculation? Enter YES or NO",
-    "bye" : "Have a good day!"
+    "bye" : "Have a good day!",
+    "infinity" : "division by zero produces infinity",
+    "yesNO" : "Please enter YES or NO"
   },
 
     "JP" : {
@@ -22,6 +25,8 @@
     "invalidOperation": "1、2、3、または4を入力して計算を選んでください。",
     "result": "結果は",
     "repeat": "もう一度計算しますか？ YES または NO を入力してください",
-    "bye": "良い一日を！"
+    "bye": "良い一日を！",
+    "infinity" : "ゼロで割ると無限大になります",
+    "yesNO" : "YES または NO を入力してください"
   }
 }  
