@@ -8,67 +8,82 @@
 
 const readline = require('readline-sync');
 const text = require('./calculator_messages.json');
-function promt(msg) {
+function prompt(msg) {
   console.log(`=> ${msg}`);
 }
 
-promt(text.language);
-let lang = readline.question().toUpperCase();
-promt(text[lang].welcome);
+prompt(text.language);
+let lang = readline.question().toUpperCase().trim();
+
+while (lang !== "EN" && lang !== "JP") {
+  prompt(text.invalidLanguage);
+  lang = readline.question().toUpperCase().trim();
+}
+
+prompt(text[lang].welcome);
+
+function isNotaNumber(num) {
+  return num.trimStart() === '' || Number.isNaN(Number(num));
+}
 
 let goAgain = true;
 while (goAgain) {
-  function isNotaNumber (num) {
-    return num.trimStart() === '' || Number.isNaN(Number(num));
+
+  prompt(text[lang].askFirstNumber);
+  let firstNumber = readline.question();
+
+  while (isNotaNumber(firstNumber)) {
+    prompt(text[lang].invalidNumber);
+    firstNumber = readline.question();
   }
 
+  prompt(text[lang].askSecondNumber);
+  let secondNumber = readline.question();
 
-  promt(text[lang].askFirstNumber);
-  let firstNUmber = readline.question();
-
-  while (isNotaNumber(firstNUmber)) {
-    promt(text[lang].invalidNumber);
-    firstNUmber = readline.question();
+  while (isNotaNumber(secondNumber)) {
+    prompt(text[lang].invalidNumber);
+    secondNumber = readline.question();
   }
 
-  promt(text[lang].askSecondNumber);
-  let secondNUmber = readline.question();
-
-  while (isNotaNumber(secondNUmber)) {
-    promt(text[lang].invalidNumber);
-    secondNUmber = readline.question();
-  }
-
-  promt(text[lang].whatOperation);
+  prompt(text[lang].whatOperation);
   let operator = readline.question();
 
   while (!['1', '2', '3', '4'].includes(operator)) {
-    promt(text[lang].invalidOperation);
+    prompt(text[lang].invalidOperation);
     operator = readline.question();
   }
 
   let output;
   switch (operator) {
     case '1':
-      output = Number(firstNUmber) + Number(secondNUmber);
+      output = Number(firstNumber) + Number(secondNumber);
       break;
     case '2':
-      output = Number(firstNUmber) - Number(secondNUmber);
+      output = Number(firstNumber) - Number(secondNumber);
       break;
     case '3':
-      output = Number(firstNUmber) * Number(secondNUmber);
+      output = Number(firstNumber) * Number(secondNumber);
       break;
     case '4':
-      output = Number(firstNUmber) / Number(secondNUmber);
+      output = Number(firstNumber) / Number(secondNumber);
       break;
   }
 
-  promt(`${text[lang].result } ${output}`);
-  promt(text[lang].repeat);
-  let rawGoAgain = readline.question().toLowerCase();
-  if (rawGoAgain === 'yes') goAgain = true;
-  if (rawGoAgain === 'no')  {
-    promt(text[lang].bye);
-    goAgain = false;
+  if ((output === Infinity || output === -Infinity)) {
+    output = text[lang].infinity;
+  }
+
+  prompt(`${text[lang].result} ${output}`);
+  prompt(text[lang].repeat);
+  let rawGoAgain = readline.question().toLowerCase().trim();
+
+  while (rawGoAgain === "") {
+    prompt(text[lang].yesNO);
+    rawGoAgain = readline.question().toLowerCase().trim();
+  }
+
+  goAgain = (rawGoAgain[0] === 'y');
+  if (!goAgain) {
+    prompt(text[lang].bye);
   }
 }
