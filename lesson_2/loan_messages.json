@@ -1,0 +1,38 @@
+{
+  "language": "Enter 'EN' for English or 'JP' for Japanese",
+  "invalidLanguage": "Please select EN or JP to continue",
+  "EN": {
+    "welcome": "Welcome to the loan calculator",
+    "modifyEntry": "Which entry you want to modify? \n Enter number: [1] for Loan Amount, [2] for Loan Duration, [3] for APR",
+    "oneTwoThree": "Please enter either 1, 2, or 3",
+    "monthlyPayment": "Your monthly payment is",
+    "invalidNumber": "Please enter a valid number that is greater than 0",
+    "askLoanDuration": "Please enter loan duration in [year-month] format. If no months enter year-0.",
+    "loanDurationExample": "Example: 5-6 (for 5 years and 6 months)",
+    "tryAgain": "Let's try again.",
+    "invalidDuration": "Something is wrong. Please enter digits in the format [year-month].",
+    "bye": "Have a good day!",
+    "askLoanAmount": "Enter Loan Amount:",
+    "askAPR": "Enter Annual Percentage Rate (APR), if none put 0:",
+    "invalidAPR": "Please enter a valid value that is 0 or above",
+    "yesNO": "Please enter YES or NO",
+    "anotherCalculation": "Would you like to do another calculation? (y/n)"
+  },
+  "JP": {
+    "welcome": "ローン計算機へようこそ",
+    "modifyEntry": "どの項目を修正しますか？\n[1] 借入金額, [2] 返済期間, [3] 年利 (APR)",
+    "oneTwoThree": "1、2、または3を入力してください",
+    "monthlyPayment": "毎月のお支払額は",
+    "invalidNumber": "0より大きい有効な数字を入力してください",
+    "askLoanDuration": "期間を [年-月] の形式で入力してください。月がない場合は [年-0] と入力してください。",
+    "loanDurationExample": "例: 5-6 (5年6ヶ月の場合)",
+    "tryAgain": "もう一度やり直してください。",
+    "invalidDuration": "入力形式が正しくありません。[年-月] の形式で入力してください。",
+    "bye": "ありがとうございました！",
+    "askLoanAmount": "借入金額を入力してください:",
+    "askAPR": "年利 (APR) を入力してください。利息がない場合は 0 を入力してください:",
+    "invalidAPR": "0以上の有効な値を入力してください",
+    "yesNO": "YES または NO を入力してください",
+    "anotherCalculation": "もう一度計算しますか？ (y/n)"
+  }
+}
