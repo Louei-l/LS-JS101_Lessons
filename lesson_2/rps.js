@@ -2,44 +2,67 @@ const readline = require('readline-sync');
 function prompt(msg) {
   console.log(`=> ${msg}`);
 }
+const VALID_CHOICES = ['rock', 'paper', 'scissors', 'lizard', 'spock'];
 
-function result (humanChoice, computerChoice) {
-  if (humanChoice === computerChoice) return "It's a draw.";
+let humanChoice = '';
+let humanScore = 0;
+let computerScore = 0;
+let goAgain = true;
 
-  switch (humanChoice) {
-    case 'rock':
-      return computerChoice === 'scissors' ? 'You win' : 'You lose.';
-    case 'scissors':
-      return computerChoice === 'paper' ? 'You win' : 'You lose.';
-    case 'paper':
-      return computerChoice === 'rock' ? 'You win' : 'You lose.';
-    default:
-      return 'Invalid Choice.';
+const rules = {
+  rock: ['scissors', 'lizard'],
+  paper: ['rock', 'spock'],
+  scissors: ['paper', 'lizard'],
+  lizard: ['spock', 'paper'],
+  spock: ['rock', 'scissors']
+};
+
+function result(humanChoice, computerChoice) {
+  if (humanChoice === computerChoice) return "It's a draw!";
+  return rules[humanChoice].includes(computerChoice)
+    ? 'Player Wins!'
+    : 'Computer Wins!';
+}
+
+function choiceValidator(humanChoiceRaw) {
+  let workingVar = humanChoiceRaw;
+  if (workingVar === 's') {
+    prompt('do you mean <spock> or <scissors> ? You can enter <sp> or <sc>');
+    workingVar = readline.question().toLowerCase().trim();
+
+    while (!workingVar.startsWith('sp') && !workingVar.startsWith('sc')) {
+      prompt('Invalid entry, try again');
+      workingVar = readline.question().toLowerCase().trim();
+    }
+  }
+
+  let validChoice = VALID_CHOICES.find((x) => x.startsWith(workingVar));
+  while (!validChoice) {
+    prompt('Invalid choice, enter again');
+    workingVar = readline.question().toLowerCase().trim();
+    validChoice = VALID_CHOICES.find((x) => x.startsWith(workingVar));
+  }
+
+  return validChoice;
+}
+
+function assignPoint(outcome) {
+  if (outcome === 'Player Wins!') {
+    humanScore += 1;
+  } else if (outcome === 'Computer Wins!') {
+    computerScore += 1;
   }
 }
 
-const VALID_CHOICES = ['rock', 'paper', 'scissors'];
-
-let goAgain = true;
-
-while (goAgain) {
-  prompt(`Please choose either ${VALID_CHOICES.join(', ')}`);
-  let humanChoice = readline.question().toLowerCase().trim();
-
-  while (!VALID_CHOICES.includes(humanChoice)) {
-    prompt('Invalid choice, enter again');
-    humanChoice = readline.question().toLowerCase().trim();
+function matchWinner() {
+  if (humanScore === 3) {
+    prompt('Congratulations you won the match!');
+  } else {
+    prompt('Hard luck, you lost the match...');
   }
+}
 
-  prompt(`You chose ${humanChoice}.`);
-
-  let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
-  let computerChoice = VALID_CHOICES[randomIndex];
-  prompt(`Computer chose ${computerChoice}.`);
-
-
-  prompt(result(humanChoice, computerChoice));
-
+function playAgain() {
   prompt('Do you want to play again? enter Yes or No.');
   let answer = readline.question().toLowerCase().trim();
 
@@ -49,4 +72,39 @@ while (goAgain) {
   }
 
   goAgain = (answer.startsWith('y'));
+  if (goAgain) {
+    humanScore = 0;
+    computerScore = 0;
+    console.clear();
+  }
+}
+
+
+while (goAgain) {
+  while (humanScore < 3 && computerScore < 3) {
+
+    prompt(`
+    Player score: ${humanScore} 
+    Computer score ${computerScore}
+    `);
+    prompt(`Choose your move: ${VALID_CHOICES.join(', ')}`);
+    let humanChoiceRaw = readline.question().toLowerCase().trim();
+    humanChoice = choiceValidator(humanChoiceRaw);
+
+    prompt(`You chose ${humanChoice}.`);
+
+    let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
+    let computerChoice = VALID_CHOICES[randomIndex];
+    prompt(`Computer chose ${computerChoice}.`);
+
+
+    let outcome = result(humanChoice, computerChoice);
+    prompt(outcome);
+
+    assignPoint(outcome);
+  }
+
+  matchWinner();
+  playAgain();
+
 }
